@@ -35,9 +35,6 @@ CREATE TABLE Country
     Population INTEGER,
     PRIMARY KEY (Cname));
             
-GRANT SELECT ON Country TO public;
-
-
 CREATE TABLE League
 	(LID INTEGER,
 	Cname CHAR(20) NOT NULL,
@@ -46,8 +43,6 @@ CREATE TABLE League
     FOREIGN KEY (Cname) REFERENCES Country
 	ON DELETE CASCADE);
     
-GRANT SELECT ON League TO public;
-
     
 CREATE TABLE StadiumAddress
 	(SID INTEGER NOT NULL,
@@ -55,23 +50,20 @@ CREATE TABLE StadiumAddress
     Address CHAR(40) NOT NULL,
     PRIMARY KEY (SID));
     
-GRANT SELECT ON StadiumAddress TO public;
-
 CREATE TABLE StadiumName 
 	(City CHAR(20) NOT NULL,
     Address CHAR(40) NOT NULL,
-    StadiumName CHAR(40) NULL,
+    Name CHAR(40) NULL,
     PRIMARY KEY (City, Address));
 
-GRANT SELECT ON StadiumName TO public;
 
 CREATE TABLE Stadium
 	(SID INTEGER,
-    StadiumName CHAR(40) NULL,
+    Name CHAR(40) NULL,
     PRIMARY KEY (SID));
     
     
-GRANT SELECT ON Stadium TO public;    
+  
 
 CREATE TABLE Ref
 	(RID INTEGER,
@@ -79,29 +71,32 @@ CREATE TABLE Ref
     Salary INTEGER,
     PRIMARY KEY (RID));
 
-GRANT SELECT ON Ref to public;
-
-CREATE TABLE HeadCoach
-	(CID INTEGER,
-    Name Char(20) NULL,
-    YearsCoaching INTEGER,
-    PRIMARY KEY (CID));
-    
-GRANT SELECT ON HeadCoach to public;
 
 CREATE TABLE Experience
 	(YearsCoaching INTEGER,
     Experience CHAR(20) NULL,
     PRIMARY KEY (YearsCoaching));
     
-GRANT SELECT ON EXPERIENCE to public;
+
+
+CREATE TABLE HeadCoach
+	(CID INTEGER,
+    Name Char(20) NULL,
+    YearsCoaching INTEGER NOT NULL,
+    PRIMARY KEY (CID),
+    FOREIGN KEY (YearsCoaching)
+	REFERENCES Experience(YearsCoaching)
+	ON DELETE CASCADE);
+    
 
 CREATE TABLE CoachExperience
 	(CID INTEGER,
     EXPERIENCE CHAR(20) NULL,
-    PRIMARY KEY (CID));
+    PRIMARY KEY (CID),
+    FOREIGN KEY (CID)
+        REFERENCES HeadCoach(CID)
+        ON DELETE CASCADE);
 
-GRANT SELECT ON CoachExperience to public;
 
 CREATE TABLE Team
 	(TID INTEGER,
@@ -114,7 +109,6 @@ CREATE TABLE Team
 		REFERENCES League
 		ON DELETE CASCADE);
 
-GRANT SELECT ON Team to public;
 
 CREATE TABLE Game
 	(GID INTEGER NOT NULL,
@@ -141,8 +135,6 @@ CREATE TABLE gameSet
 		REFERENCES GAME
         ON DELETE CASCADE);
 		
-
-GRANT SELECT ON gameSet to public;
 
 CREATE TABLE WorksFor
 	(RID INTEGER NOT NULL,
@@ -195,7 +187,6 @@ CREATE TABLE Libero
         REFERENCES Team
         ON DELETE CASCADE);
 
-GRANT SELECT ON Libero to public;    
 
 
 CREATE TABLE ServerSpecialist
@@ -211,7 +202,6 @@ CREATE TABLE ServerSpecialist
         REFERENCES Team
         ON DELETE CASCADE);
 
-GRANT SELECT ON ServerSpecialist to public;    
 
 
 CREATE TABLE OutsideHitter
@@ -229,9 +219,6 @@ CREATE TABLE OutsideHitter
         REFERENCES Team
         ON DELETE CASCADE);
 
-GRANT SELECT ON OutsideHitter to public;    
-
-
 
 CREATE TABLE Setter
     (PID INTEGER NOT NULL,
@@ -248,9 +235,6 @@ CREATE TABLE Setter
         ON DELETE CASCADE);
     
 
-GRANT SELECT ON Setter to public;
-
-
 CREATE TABLE MiddleBlocker
     (PID INTEGER NOT NULL,
     NAME CHAR(20),
@@ -263,10 +247,6 @@ CREATE TABLE MiddleBlocker
     FOREIGN KEY (TID)
         REFERENCES Team(TID)
         ON DELETE CASCADE);
-
-GRANT SELECT ON MiddleBlocker to public;        
-
-
 
 
 INSERT INTO Country VALUES('Canada', '38010000');
