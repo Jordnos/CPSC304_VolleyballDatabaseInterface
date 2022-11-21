@@ -10,9 +10,10 @@ drop table stadiumaddress;
 drop table stadium;
 drop table stadiumname;
 drop table ref;
-drop table experience;
 drop table coachexperience;
 drop table headcoach;
+drop table experience;
+
 
 drop table Libero;
 drop table ServerSpecialist;
@@ -44,25 +45,26 @@ CREATE TABLE League
 	ON DELETE CASCADE);
     
     
-CREATE TABLE StadiumAddress
-	(SID INTEGER NOT NULL,
-    Name CHAR(40) NOT NULL,
-    Address CHAR(40) NOT NULL,
-    PRIMARY KEY (SID));
-    
-CREATE TABLE StadiumName 
-	(City CHAR(20) NOT NULL,
-    Address CHAR(40) NOT NULL,
-    Name CHAR(40) NULL,
-    PRIMARY KEY (City, Address));
-
-
 CREATE TABLE Stadium
 	(SID INTEGER,
     Name CHAR(40) NULL,
-    PRIMARY KEY (SID));
+    PRIMARY KEY (SID));    
     
+CREATE TABLE StadiumAddress
+    (SID INTEGER NOT NULL,	
+    City CHAR(40) NOT NULL,
+    Address CHAR(40) NOT NULL,
+    PRIMARY KEY (SID),
+    FOREIGN KEY (SID) REFERENCES Stadium
+	ON DELETE CASCADE);
     
+CREATE TABLE StadiumName 
+    (City CHAR(20) NOT NULL,
+    Address CHAR(40) NOT NULL,
+    Name CHAR(40),
+    PRIMARY KEY (City, Address));
+
+
   
 
 CREATE TABLE Ref
@@ -249,11 +251,18 @@ CREATE TABLE MiddleBlocker
         ON DELETE CASCADE);
 
 
-INSERT INTO Country VALUES('Canada', '38010000');
-INSERT INTO Country VALUES('USA', '329500000');
-INSERT INTO Country VALUES('Italy', '59550000');
-INSERT INTO Country VALUES('Brazil', '212600000');
-INSERT INTO Country VALUES('France', '67390000');
+
+
+
+
+
+
+
+INSERT INTO Country VALUES('Canada', 38010000);
+INSERT INTO Country VALUES('USA', 329500000);
+INSERT INTO Country VALUES('Italy', 59550000);
+INSERT INTO Country VALUES('Brazil', 212600000);
+INSERT INTO Country VALUES('France', 67390000);
 
 INSERT INTO League VALUES (1, 'Canada', 'The Canadian League');
 INSERT INTO League VALUES (2, 'USA', 'American Volleyball Open');
@@ -261,11 +270,17 @@ INSERT INTO League VALUES (3, 'Italy', 'Superlega');
 INSERT INTO League VALUES (4, 'Brazil', 'Super League');
 INSERT INTO League VALUES (5, 'France', 'Pro A');
 
-INSERT INTO StadiumAddress VALUES ('1', 'Vancouver','1234 Numbers Street');
-INSERT INTO StadiumAddress VALUES ('2', 'Sydney Cricket Ground', 'Driver Ave');
-INSERT INTO StadiumAddress VALUES ('3', 'Maracana Stadium',  'Maracana Road');
-INSERT INTO StadiumAddress VALUES ('4', 'Staples Center', '1111 S Figueroa Street');
-INSERT INTO StadiumAddress VALUES ('5', 'Accor Arena',  'Bercy Boulevard');
+INSERT INTO Stadium VALUES (1,'Stadium One');
+INSERT INTO Stadium VALUES (2, 'Sydney Cricket Ground');
+INSERT INTO Stadium VALUES (3, 'Maracana Stadium');
+INSERT INTO Stadium VALUES (4, 'Staples Center');
+INSERT INTO Stadium VALUES (5, 'Accor Arena');
+
+INSERT INTO StadiumAddress VALUES (1, 'Vancouver','1234 Numbers Street');
+INSERT INTO StadiumAddress VALUES (2, 'Sydney Cricket Ground', 'Driver Ave');
+INSERT INTO StadiumAddress VALUES (3, 'Maracana Stadium',  'Maracana Road');
+INSERT INTO StadiumAddress VALUES (4, 'Staples Center', '1111 S Figueroa Street');
+INSERT INTO StadiumAddress VALUES (5, 'Accor Arena',  'Bercy Boulevard');
 
 
 INSERT INTO StadiumName VALUES ('Vancouver', '1234 Numbers Street','Stadium One');
