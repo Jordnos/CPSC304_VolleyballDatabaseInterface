@@ -1,5 +1,5 @@
 
-drop table Plays;
+
 drop table WorksFor;
 drop table RefsFor;
 drop table GameSet;
@@ -175,20 +175,7 @@ CREATE TABLE RefsFor
         REFERENCES Game(GID)
         ON DELETE CASCADE);
 
--- Game to Team relation is many to many in our schema
--- since a game GID belongs to a single team TID (which are connected through Plays)
-CREATE TABLE Plays
-	(GID INTEGER NOT NULL,
-	TID INTEGER NOT NULL,
-	Win CHAR(2) NOT NULL,
-	PRIMARY KEY (GID, TID),
-	UNIQUE (GID, Win),
-	FOREIGN KEY (TID)
-		REFERENCES Team
-		ON DELETE CASCADE,
-    FOREIGN KEY (GID)
-        REFERENCES Game(GID)
-        ON DELETE CASCADE);
+
 
 -- PID refers to LiberoPID
 CREATE TABLE Libero
@@ -199,6 +186,7 @@ CREATE TABLE Libero
     Digs INTEGER NOT NULL,
     JerseyNumber INTEGER NOT NULL,
     TID INTEGER NOT NULL,
+    UNIQUE (JerseyNumber, TID),
     PRIMARY KEY (PID),
     FOREIGN KEY (TID)
         REFERENCES Team
@@ -214,6 +202,7 @@ CREATE TABLE ServerSpecialist
     Aces INTEGER NOT NULL,
     JerseyNumber INTEGER NOT NULL,
     TID INTEGER NOT NULL,
+    UNIQUE (JerseyNumber, TID),
     PRIMARY KEY (PID),
     FOREIGN KEY (TID)
         REFERENCES Team
@@ -231,6 +220,7 @@ CREATE TABLE OutsideHitter
     Blocks INTEGER NOT NULL,
     JerseyNumber INTEGER NOT NULL,
     TID INTEGER NOT NULL,
+    UNIQUE (JerseyNumber, TID),
     PRIMARY KEY (PID),
     FOREIGN KEY (TID)
         REFERENCES Team
@@ -246,6 +236,7 @@ CREATE TABLE Setter
     SetSuccessRate DECIMAL(2,2),
     JerseyNumber INTEGER,
     TID INTEGER NOT NULL,
+    UNIQUE (JerseyNumber, TID),
     PRIMARY KEY (PID),
     FOREIGN KEY (TID)
         REFERENCES Team(TID)
@@ -260,6 +251,7 @@ CREATE TABLE MiddleBlocker
     Blocks INTEGER NOT NULL,
     JerseyNumber INTEGER NOT NULL,
     TID INTEGER NOT NULL,
+    UNIQUE (JerseyNumber, TID),
     PRIMARY KEY (PID),
     FOREIGN KEY (TID)
         REFERENCES Team(TID)
@@ -269,13 +261,13 @@ CREATE TABLE MiddleBlocker
 CREATE TABLE BMI
     (Height INTEGER NOT NULL,
     Weight INTEGER NOT NULL,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY(Height, Weight));
 
 -- PID refers to Libero PID
 CREATE TABLE LiberoBMI
     (PID INTEGER,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (PID),
     FOREIGN KEY (PID)
         REFERENCES Libero(PID)
@@ -283,7 +275,7 @@ CREATE TABLE LiberoBMI
 
 CREATE TABLE ServerSpecialistBMI
     (PID INTEGER,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (PID),
     FOREIGN KEY (PID)
         REFERENCES ServerSpecialist(PID)
@@ -292,7 +284,7 @@ CREATE TABLE ServerSpecialistBMI
 
 CREATE TABLE OutsideHitterBMI
     (PID INTEGER,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (PID),
     FOREIGN KEY (PID)
         REFERENCES OutsideHitter(PID)
@@ -301,7 +293,7 @@ CREATE TABLE OutsideHitterBMI
 
 CREATE TABLE SetterBMI
     (PID INTEGER,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (PID),
     FOREIGN KEY (PID)
         REFERENCES Setter(PID)
@@ -309,7 +301,7 @@ CREATE TABLE SetterBMI
 
 CREATE TABLE MiddleBlockerBMI
     (PID INTEGER,
-    BMI DECIMAL(2,2) NOT NULL,
+    BMI DECIMAL(3,1) NOT NULL,
     PRIMARY KEY (PID),
     FOREIGN KEY (PID)
         REFERENCES MiddleBlocker(PID)
@@ -421,19 +413,91 @@ INSERT INTO RefsFor VALUES (3, 3);
 INSERT INTO RefsFor VALUES (4, 4);
 INSERT INTO RefsFor VALUES (5, 5);
 
--- INSERT INTO Plays VALUES (1, 1, 'W');
--- INSERT INTO Plays VALUES (1, 3, 'L');
--- INSERT INTO Plays VALUES (2, 5, 'L');
--- INSERT INTO Plays VALUES (2, 4, 'W');
--- INSERT INTO Plays VALUES (3, 2, 'W');
 
 
--- -- Weight in kg, Height in cm
--- INSERT INTO Libero VALUES (1, 'Bob Smith', 60, 160, 10, 14, 1);
--- INSERT INTO Libero VALUES  (2, 'Steve Mathhews', 65, 170, , 14, 2)
--- INSERT INTO Libero VALUES  (3, 'Bob Smith', 100, 80, 10, 14, 3)
--- INSERT INTO Libero VALUES  (4, 'Bob Smith', 100, 80, 10, 14, 4)
--- INSERT INTO Libero VALUES  (5, 'Bob Smith', 100, 80, 10, 14, 5)
+-- PID, Name, Weight in kg, Height in cm, Digs, Jersey Number, TID
+INSERT INTO Libero VALUES (1, 'Bob Smith', 60, 160, 10, 14, 1);
+INSERT INTO Libero VALUES  (2, 'Steve Mathhews', 65, 170, 20, 10, 2);
+INSERT INTO Libero VALUES  (3, 'Frank Manger', 60, 170, 15, 1, 3);
+INSERT INTO Libero VALUES  (4, 'Brook Pol', 50, 150, 30, 8, 4);
+INSERT INTO Libero VALUES  (5, 'Mor West', 55, 180, 22, 2, 5);
 
--- INSERT INTO LiberoBMI VALUES (1, 1)
+-- PID (from Libero), BMI 
+INSERT INTO LiberoBMI VALUES (1, 23.4);
+INSERT INTO LiberoBMI VALUES (2, 22.5);
+INSERT INTO LiberoBMI VALUES (3, 20.8);
+INSERT INTO LiberoBMI VALUES (4, 22.2);
+INSERT INTO LiberoBMI VALUES (5, 17.0);
+
+
+
+-- Height Weight BMI
+INSERT INTO BMI VALUES (160, 60, 23.4);
+INSERT INTO BMI VALUES (170, 65, 22.5);
+INSERT INTO BMI VALUES (170, 60, 20.8);
+INSERT INTO BMI VALUES (150, 50, 22.2);
+INSERT INTO BMI VALUES (180, 55, 17.0);
+
+
+-- PID, Name,  Weight in kg, Height in cm, Aces, Jersey Number, TID
+INSERT INTO ServerSpecialist VALUES (1, 'Jarvis Gibbs', 60, 160, 18, 14, 1);
+INSERT INTO ServerSpecialist VALUES  (2, 'Jonah Muir', 65, 170, 28, 10, 2);
+INSERT INTO ServerSpecialist VALUES  (3, 'Waqar Herrera', 60, 170, 22, 11, 3);
+INSERT INTO ServerSpecialist VALUES  (4, 'Reagan Castro', 50, 150, 15, 18, 4);
+INSERT INTO ServerSpecialist VALUES  (5, 'Gianni Snider', 55, 180, 21, 12, 5);
+
+-- PID (from ServerSpecialist), BMI 
+INSERT INTO ServerSpecialistBMI VALUES (1, 23.4);
+INSERT INTO ServerSpecialistBMI VALUES (2, 22.5);
+INSERT INTO ServerSpecialistBMI VALUES (3, 20.8);
+INSERT INTO ServerSpecialistBMI VALUES (4, 22.2);
+INSERT INTO ServerSpecialistBMI VALUES (5, 17.0);
+
+
+
+-- PID, Name, Weight in kg, Height in cm, Kills, Aces, Blocks, Jersey Number, TID
+INSERT INTO OutsideHitter VALUES (1, 'Elliot Metcalfe', 60, 160, 20, 10, 15, 21, 1);
+INSERT INTO OutsideHitter VALUES  (2, 'Arlo Conrad', 65, 170, 18, 15, 10, 20, 2);
+INSERT INTO OutsideHitter VALUES  (3, 'Adyan Herman', 60, 170, 14, 16, 18, 25, 3);
+INSERT INTO OutsideHitter VALUES  (4, 'Jarred Jensen', 50, 150, 12, 14, 13, 28, 4);
+INSERT INTO OutsideHitter VALUES  (5, 'Stan Dougherty', 55, 180, 21, 11, 19, 24, 5);
+
+-- PID (from OutsideHitter), BMI 
+INSERT INTO OutsideHitterBMI VALUES (1, 23.4);
+INSERT INTO OutsideHitterBMI VALUES (2, 22.5);
+INSERT INTO OutsideHitterBMI VALUES (3, 20.8);
+INSERT INTO OutsideHitterBMI VALUES (4, 22.2);
+INSERT INTO OutsideHitterBMI VALUES (5, 17.0);
+
+
+-- PID, Name, Weight in kg, Height in cm, Set Attempts, Set SuccessRate Jersey Number, TID
+INSERT INTO Setter VALUES (1, 'Steffan Connelly', 60, 160, 92, 0.78, 32, 1);
+INSERT INTO Setter VALUES  (2, 'Remy Davidson', 65, 170, 80, 0.82 ,31, 2);
+INSERT INTO Setter VALUES  (3, 'Damian Mclaughlin', 60, 170, 102, 0.91 ,34, 3);
+INSERT INTO Setter VALUES  (4, 'Jeanne Mullins', 50, 150, 40, 0.67 ,35, 4);
+INSERT INTO Setter VALUES  (5, 'Amir Ridley', 55, 180, 74, 0.71 ,39, 5);
+
+-- PID (from Setter), BMI 
+INSERT INTO SetterBMI VALUES (1, 23.4);
+INSERT INTO SetterBMI VALUES (2, 22.5);
+INSERT INTO SetterBMI VALUES (3, 20.8);
+INSERT INTO SetterBMI VALUES (4, 22.2);
+INSERT INTO SetterBMI VALUES (5, 17.0);
+
+
+
+-- PID, Name, Weight in kg, Height in cm,  Blocks, Jersey Number, TID
+INSERT INTO MiddleBlocker VALUES (1, 'Hashim Hodges', 60, 160, 22, 32, 1);
+INSERT INTO MiddleBlocker VALUES  (2, 'Vijay Spence', 65, 170, 21, 31, 2);
+INSERT INTO MiddleBlocker VALUES  (3, 'Dominic Levine', 60, 170, 12, 34, 3);
+INSERT INTO MiddleBlocker VALUES  (4, 'Blane Davis', 50, 150, 35, 35, 4);
+INSERT INTO MiddleBlocker VALUES  (5, 'Sal Goodman', 55, 180, 31, 39, 5);
+
+-- PID (from MiddleBlocker), BMI 
+INSERT INTO MiddleBlockerBMI VALUES (1, 23.4);
+INSERT INTO MiddleBlockerBMI VALUES (2, 22.5);
+INSERT INTO MiddleBlockerBMI VALUES (3, 20.8);
+INSERT INTO MiddleBlockerBMI VALUES (4, 22.2);
+INSERT INTO MiddleBlockerBMI VALUES (5, 17.0);
+
 
