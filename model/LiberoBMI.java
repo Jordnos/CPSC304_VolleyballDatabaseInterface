@@ -5,12 +5,12 @@ package ca.ubc.cs304.model;
 /**
  * The intent for this class is to update/store information about the LiberoBMI relation
  */
-public class LiberoBmi {
+public class LiberoBMI {
     private final int pid;
     private final float bmi;
 
 
-    public LiberoBmi(int pid, float bmi) {
+    public LiberoBMI(int pid, float bmi) {
         this.pid = pid;
         this.bmi = bmi;
     }

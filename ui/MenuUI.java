@@ -1,13 +1,17 @@
 package ca.ubc.cs304.ui;
+import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
+
 import javax.swing.*;
 
 public class MenuUI extends JFrame {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
+    private VolleyballWindowDelegate delegate;
 
-    public MenuUI() {
+    public MenuUI(VolleyballWindowDelegate delegate) {
         super();
+        this.delegate = delegate;
         setSize(WIDTH, HEIGHT);
 
         addMenus();
@@ -34,15 +38,13 @@ public class MenuUI extends JFrame {
     }
 
     private JComponent makeInsertPanel() {
-        return new InsertPanel();
+        return new InsertPanel(delegate);
     }
     private JComponent makeDeletePanel() {
-        // TODO:
-        return new JPanel();
+        return new DeletePanel(delegate);
     }
     private JComponent makeUpdatePanel() {
-        // TODO:
-        return new JPanel();
+        return new UpdatePanel(delegate);
     }
     private JComponent makeSelectionPanel() {
         // TODO:
@@ -68,9 +70,4 @@ public class MenuUI extends JFrame {
     private JComponent makeNestedAggregationPanel() {
         return new NestedAggregationPanel();
     }
-
-    // main is here to be able to test the gui - remove later
-    public static void main(String[] args) { new MenuUI(); }
-
-
 }

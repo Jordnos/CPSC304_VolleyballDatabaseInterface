@@ -23,6 +23,6 @@ public class VolleyballWindow extends JFrame {
 
     public void showFrame(VolleyballWindowDelegate delegate) {
         this.delegate = delegate;
-        //TODO make gui
+        new MenuUI(delegate);
     }
 }

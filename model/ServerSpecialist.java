@@ -1,7 +1,5 @@
 package ca.ubc.cs304.model;
 
-
-
 /**
  * The intent for this class is to update/store information about the ServerSpecialist relation
  */
