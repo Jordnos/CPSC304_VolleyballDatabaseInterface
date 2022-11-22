@@ -24,7 +24,7 @@ public class HeadCoach {
         return name;
     }
     public int getYearsCoaching() {
-        reutrn yearsCoaching;
+        return yearsCoaching;
     }
 
 }

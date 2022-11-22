@@ -5,12 +5,12 @@ package ca.ubc.cs304.model;
 /**
  * The intent for this class is to update/store information about the SetterBmi relation
  */
-public class SetterBmi {
+public class SetterBMI {
     private final int pid;
     private final float bmi;
 
 
-    public SetterBmi(int pid, float bmi) {
+    public SetterBMI(int pid, float bmi) {
         this.pid = pid;
         this.bmi = bmi;
     }

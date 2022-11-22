@@ -9,13 +9,14 @@ public class Team {
     private final int tid;
     private final String name;
     private final int lid;
-    private final int cid
+    private final int cid;
 
 
     public Team(int tid, String name, int lid, int cid) {
         this.tid = tid;
         this.name = name;
-        this.lid = cid;
+        this.lid = lid;
+        this.cid = cid;
     }
 
     public int getTid() {

@@ -110,7 +110,7 @@ public class DatabaseConnectionHandler {
     //Query methods for Country class
     public void deleteCountry(String countryName) {
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM Country WHERE Cname = ?");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM Country WHERE Cname=?");
             ps.setString(1, countryName);
 
             int rowCount = ps.executeUpdate();
@@ -176,7 +176,7 @@ public class DatabaseConnectionHandler {
     		// display column names;
     		for (int i = 0; i < rsmd.getColumnCount(); i++) {
     			// get column name and print it
-    			System.out.printf("%-15", rsmd.getColumnName(i + 1));
+    			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
     		}
             System.out.printf("\n");
 

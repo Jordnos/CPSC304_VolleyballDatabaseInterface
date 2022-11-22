@@ -10,19 +10,19 @@ public class Game {
     private final int sid;
     private final int winTid;
     private final int loseTid;
-    private final int lid
+    private final int lid;
 
 
     public Game(int gid, int sid, int winTid, int loseTid, int lid) {
-        this.tid = tid;
+        this.gid = gid;
         this.sid = sid;
         this.winTid = winTid;
         this.loseTid = loseTid;
         this.lid = lid;
     }
 
-    public int getTid() {
-        return tid;
+    public int getGid() {
+        return gid;
     }
 
     public int getSid() {
