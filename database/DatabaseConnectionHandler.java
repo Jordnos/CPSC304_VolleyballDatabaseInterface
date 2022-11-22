@@ -168,6 +168,7 @@ public class DatabaseConnectionHandler {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
 
+            // TERMINAL IMPLEMENTATION
             // get info on ResultSet
     		ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -176,7 +177,7 @@ public class DatabaseConnectionHandler {
     		// display column names;
     		for (int i = 0; i < rsmd.getColumnCount(); i++) {
     			// get column name and print it
-    			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
+    			System.out.printf("%-20s", rsmd.getColumnName(i + 1));
     		}
             System.out.printf("\n");
 

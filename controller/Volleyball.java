@@ -110,12 +110,12 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
      * Displays information about countries
      */
     public void showCountry() {
+
+        //TERMINAL IMPLEMENTATION
         Country[] models = dbHandler.getCountryInfo();
 
         for (int i = 0; i < models.length; i++) {
             Country model = models[i];
-
-            //TODO output the attributes of the countries with country's getter functions for GUI
 
             System.out.printf("%-10.10s", model.getCName());
             System.out.printf("%-20.20s", model.getPopulation());
