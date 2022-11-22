@@ -8,11 +8,13 @@ package ca.ubc.cs304.model;
 public class Ref {
     private final int rid;
     private final String name;
+    private final int salary;
 
 
-    public Ref(int rid, String name) {
+    public Ref(int rid, String name, int salary) {
         this.rid = rid;
         this.name = name;
+        this.salary = salary;
     }
 
     public int getRid() {
@@ -21,6 +23,9 @@ public class Ref {
     public String getName() {
         return name;
     }
+    public int getSalary() {
+        return salary;
+    }
+
 
 }
-

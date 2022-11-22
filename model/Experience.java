@@ -3,30 +3,23 @@ package ca.ubc.cs304.model;
 
 
 /**
- * The intent for this class is to update/store information about the HeadCoach relation
+ * The intent for this class is to update/store information about the Experience relation
  */
 public class Experience {
-    private final int cid;
-    private final String name;
     private final int yearsCoaching;
+    private final String experience;
 
 
-    public Experience(int cid, String name, int yearsCoaching) {
-        this.cid = cid;
-        this.name = name;
+    public Experience(int yearsCoaching, String experience) {
         this.yearsCoaching = yearsCoaching;
-    }
-
-    public int getCid() {
-        return cid;
-    }
-    public String getName() {
-        return name;
+        this.experience = experience;
     }
 
     public int getYearsCoaching() {
         return yearsCoaching;
     }
+    public String getExperience() {
+        return experience;
+    }
 
 }
-
