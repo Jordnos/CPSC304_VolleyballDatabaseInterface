@@ -23,10 +23,8 @@ public class HeadCoach {
     public String getName() {
         return name;
     }
-
     public int getYearsCoaching() {
-        return yearsCoaching;
+        reutrn yearsCoaching;
     }
 
 }
-
