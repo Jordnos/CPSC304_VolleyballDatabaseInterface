@@ -5,6 +5,7 @@ import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
 import ca.ubc.cs304.model.Country;
 import ca.ubc.cs304.ui.LoginWindow;
+import ca.ubc.cs304.ui.TerminalVolleyball;
 import ca.ubc.cs304.ui.VolleyballWindow;
 
 /**
@@ -31,9 +32,15 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
         if (didConnect) {
             loginWindow.dispose();
 
-            VolleyballWindow volleyballWindow = new VolleyballWindow();
-            volleyballWindow.setupDatabase(this);
-            volleyballWindow.showFrame(this);
+            //UI IMPLEMENTATION
+//            VolleyballWindow volleyballWindow = new VolleyballWindow();
+//            volleyballWindow.setupDatabase(this);
+//            volleyballWindow.showFrame(this);
+
+            //CONSOLE IMPLEMENTATION
+            TerminalVolleyball terminalVolleyball = new TerminalVolleyball();
+            terminalVolleyball.setupDatabase(this);
+            terminalVolleyball.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
 
@@ -108,7 +115,11 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
         for (int i = 0; i < models.length; i++) {
             Country model = models[i];
 
-            //TODO output the attributes of the countries with country's getter functions
+            //TODO output the attributes of the countries with country's getter functions for GUI
+
+            System.out.printf("%-10.10s", model.getCName());
+            System.out.printf("%-20.20s", model.getPopulation());
+            System.out.println();
         }
     }
 

@@ -25,7 +25,4 @@ public interface VolleyballWindowDelegate {
     public void insertCountry(Country model);
     public void showCountry();
     public void updateCountry(String countryName, int population);
-
-//TODO methods for queries!!!
-
 }

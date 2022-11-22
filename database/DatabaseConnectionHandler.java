@@ -144,7 +144,7 @@ public class DatabaseConnectionHandler {
     public void updateCountry(String countryName, int population) {
         try {
             PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE COUNTRY SET Population = ? WHERE Cname = ?");
+                    "UPDATE Country SET Population = ? WHERE Cname = ?");
             ps.setInt(1, population);
             ps.setString(2, countryName);
 
@@ -168,17 +168,17 @@ public class DatabaseConnectionHandler {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
 
-// TODO check if this is needed??
             // get info on ResultSet
-//    		ResultSetMetaData rsmd = rs.getMetaData();
-//
-//    		System.out.println(" ");
-//
-//    		// display column names;
-//    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
-//    			// get column name and print it
-//    			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
-//    		}
+    		ResultSetMetaData rsmd = rs.getMetaData();
+
+    		System.out.println(" ");
+
+    		// display column names;
+    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
+    			// get column name and print it
+    			System.out.printf("%-15", rsmd.getColumnName(i + 1));
+    		}
+            System.out.printf("\n");
 
             while(rs.next()) {
                 Country model = new Country(rs.getString("Cname"),
