@@ -37,13 +37,13 @@ drop table country;
 
 
 CREATE TABLE Country
-	(Cname CHAR(20) NOT NULL,
+	(Cname VARCHAR(20) NOT NULL,
     Population INTEGER,
     PRIMARY KEY (Cname));
             
 CREATE TABLE League
 	(LID INTEGER,
-	Cname CHAR(20) NOT NULL,
+	Cname VARCHAR(20) NOT NULL,
 	Name CHAR(40),
     PRIMARY KEY (LID),
     FOREIGN KEY (Cname) REFERENCES Country

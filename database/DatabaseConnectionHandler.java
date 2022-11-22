@@ -64,7 +64,7 @@ public class DatabaseConnectionHandler {
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("CREATE TABLE Country (Cname char(20) NOT NULL PRIMARY KEY, " +
+            stmt.executeUpdate("CREATE TABLE Country (Cname varchar(20) PRIMARY KEY, " +
                     "Population integer)");
             stmt.close();
         } catch (SQLException e) {
