@@ -1,5 +1,7 @@
 package ca.ubc.cs304.delegates;
 
+import ca.ubc.cs304.model.Country;
+
 /**
  * This interface uses the delegation design pattern where instead of having
  * the VolleyballWindow class try to do everything, it will only
@@ -8,11 +10,21 @@ package ca.ubc.cs304.delegates;
  *
  * VolleyballWindow calls the methods that we have listed below but
  * Volleyball is the actual class that will implement the methods.
+ *
+ * Reference: LoginWindowDelegate and TerminalTransationDelegate from CPSC304-Sample Project
  */
 
 public interface VolleyballWindowDelegate {
     public void databaseSetup();
     public void volleyballWindowFinished();
+
+    /**
+     * Query methods for Country class.
+     */
+    public void deleteCountry(String countryName);
+    public void insertCountry(Country model);
+    public void showCountry();
+    public void updateCountry(String countryName, int population);
 
 //TODO methods for queries!!!
 

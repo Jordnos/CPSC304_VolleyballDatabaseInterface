@@ -3,6 +3,7 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
+import ca.ubc.cs304.model.Country;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.VolleyballWindow;
 
@@ -10,7 +11,7 @@ import ca.ubc.cs304.ui.VolleyballWindow;
  * This is the main controller class that will orchestrate the Volleyball Database project.
  * Reference: Bank.java class in the CPSC304-JavaDemo Project.
  */
-public class Volleyball implements LoginWindowDelegate {
+public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate {
 
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
@@ -31,8 +32,8 @@ public class Volleyball implements LoginWindowDelegate {
             loginWindow.dispose();
 
             VolleyballWindow volleyballWindow = new VolleyballWindow();
-            volleyballWindow.setupDatabase((VolleyballWindowDelegate) this);
-            volleyballWindow.showFrame((VolleyballWindowDelegate) this);
+            volleyballWindow.setupDatabase(this);
+            volleyballWindow.showFrame(this);
         } else {
             loginWindow.handleLoginFailed();
 
@@ -46,11 +47,10 @@ public class Volleyball implements LoginWindowDelegate {
 
     /**
      * VolleyBallWindowDelegate Implementation
-     *
-     * VolleyballWindow instance tells us that it is done with what it's doing so we are cleaning up the connection
+     * VolleyballWindow instance tells us that it is done with what it's doing, so we are cleaning up the connection
      * since its no longer needed.
      */
-    public void volleyBallWindowFinished() {
+    public void volleyballWindowFinished() {
         dbHandler.close();
         dbHandler = null;
         System.exit(0);
@@ -58,7 +58,6 @@ public class Volleyball implements LoginWindowDelegate {
 
     /**
      * VolleyballWindowDelegate Implementation
-     *
      * The VolleyballWindow instance tells us that the user is fine with dropping any existing tables and creating new
      * ones for this project to use.
      */
@@ -74,7 +73,44 @@ public class Volleyball implements LoginWindowDelegate {
         volleyball.start();
     }
 
-    //TODO methods for queries!!!
+    //Query Methods for Country class.
+    /**
+     * VolleyballWindowDelegate Implementation
+     * Delete country with given country name
+     */
+    public void deleteCountry(String countryName) {
+        dbHandler.deleteCountry(countryName);
+    }
+
+    /**
+     * VolleyballWindowDelegate Implementation
+     * Insert a country with the given info
+     */
+    public void insertCountry(Country model) {
+        dbHandler.insertCountry(model);
+    }
+
+    /**
+     * VolleyballWindowDelegate Implementation
+     * Update a country's population for a specific country name
+     */
+    public void updateCountry(String countryName, int population) {
+        dbHandler.updateCountry(countryName, population);
+    }
+
+    /**
+     * VolleyballWindowDelegate Implementation
+     * Displays information about countries
+     */
+    public void showCountry() {
+        Country[] models = dbHandler.getCountryInfo();
+
+        for (int i = 0; i < models.length; i++) {
+            Country model = models[i];
+
+            //TODO output the attributes of the countries with country's getter functions
+        }
+    }
 
 
 }
