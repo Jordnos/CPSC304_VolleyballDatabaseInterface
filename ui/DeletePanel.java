@@ -26,7 +26,7 @@ public class DeletePanel extends JPanel implements ActionListener {
     ArrayList<JTextField> keysText = new ArrayList<>();
     JLabel titleLabel;
     JButton deleteButton;
-    private VolleyballWindowDelegate delegate;
+    private final VolleyballWindowDelegate delegate;
 
     public DeletePanel(VolleyballWindowDelegate delegate) {
         this.delegate = delegate;
@@ -80,8 +80,11 @@ public class DeletePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == deleteButton) {
             delegate.deleteCountry(keysText.get(0).getText());
-            // next line: shows new list of countries in terminal for testing purposes
-            delegate.showCountry();
+
+            DataTable frame = new DataTable(delegate.getCountryTableData());
+            frame.setTitle("Country");
+            frame.setVisible(true);
+            frame.setBounds(10, 10, 370, 360);
         }
     }
 }

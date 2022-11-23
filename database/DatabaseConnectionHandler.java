@@ -1,6 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.Relation;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -195,4 +196,51 @@ public class DatabaseConnectionHandler {
 
         return result.toArray(new Country[result.size()]);
     }
+
+    public Object[][] getRelationInfo(Relation relation, String[] conditions) {
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();
+        Object[][] dataArray = null;
+
+        try {
+            Statement stmt = connection.createStatement();
+            String query = "SELECT * FROM " + relation.getRelationName();
+            for(int i = 0; i < conditions.length; i++){
+                if(i == 0)
+                    query += " WHERE ";
+                query += conditions[i];
+                if(i < conditions.length-1)
+                    query += " AND ";
+            }
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int rowNum = 0;
+            while(rs.next()) {
+                a.add(new ArrayList<>());
+                for(int i = 0; i < relation.getAllAttributeNames().length; i++){
+                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                }
+                rowNum++;
+            }
+            if(a.isEmpty())
+                dataArray = new Object[0][0];
+            else{
+                dataArray = new Object[a.size()][a.get(0).size()];
+                for(int i = 0; i < a.size(); i++){
+                    dataArray[i] = a.get(i).toArray();
+                }
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return dataArray;
+    }
+
 }

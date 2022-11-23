@@ -143,9 +143,9 @@ CREATE TABLE Game
 
 CREATE TABLE GameSet 
 	(SetNumber INTEGER NOT NULL,
+    GID INTEGER NOT NULL,
 	WinnerScore INTEGER,
-	LoserScore INTEGER,
-	GID INTEGER NOT NULL,
+    LoserScore INTEGER,
     PRIMARY KEY (SetNumber, GID),
     FOREIGN KEY (GID)
 		REFERENCES GAME(GID)
@@ -392,11 +392,11 @@ INSERT INTO Game VALUES ('4', '1', '1', '2', '1');
 INSERT INTO Game VALUES ('5', '2', '4', '5', '2');
 
 -- Set #, Score Winner Score, Loser Score, GID
-INSERT INTO GameSet Values ('1', '25', '20', '1');
-INSERT INTO GameSet Values ('2', '25', '20', '1');
-INSERT INTO GameSet Values ('1', '25', '19', '2');
-INSERT INTO GameSet Values ('2', '25', '16', '2');
-INSERT INTO GameSet Values ('3', '15', '13', '2');
+INSERT INTO GameSet Values ('1', '1', '25', '20');
+INSERT INTO GameSet Values ('2', '1', '25', '20');
+INSERT INTO GameSet Values ('1', '2', '15', '19');
+INSERT INTO GameSet Values ('2', '2', '15', '16');
+INSERT INTO GameSet Values ('3', '2', '15', '13');
 
 -- RID, LID
 INSERT INTO WorksFor VALUES (1, 1);

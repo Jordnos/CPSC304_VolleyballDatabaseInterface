@@ -4,6 +4,7 @@ import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.Relation;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalVolleyball;
 import ca.ubc.cs304.ui.VolleyballWindow;
@@ -33,14 +34,14 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
             loginWindow.dispose();
 
             //UI IMPLEMENTATION
-//            VolleyballWindow volleyballWindow = new VolleyballWindow();
-//            volleyballWindow.setupDatabase(this);
-//            volleyballWindow.showFrame(this);
+            VolleyballWindow volleyballWindow = new VolleyballWindow();
+            volleyballWindow.setupDatabase(this);
+            volleyballWindow.showFrame(this);
 
             //CONSOLE IMPLEMENTATION
-            TerminalVolleyball terminalVolleyball = new TerminalVolleyball();
-            terminalVolleyball.setupDatabase(this);
-            terminalVolleyball.showMainMenu(this);
+            //TerminalVolleyball terminalVolleyball = new TerminalVolleyball();
+            //terminalVolleyball.setupDatabase(this);
+            //terminalVolleyball.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
 
@@ -121,6 +122,14 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
             System.out.printf("%-20.20s", model.getPopulation());
             System.out.println();
         }
+    }
+
+    public Relation[] getCountryTableData() {
+        return dbHandler.getCountryInfo();
+    }
+
+    public Object[][] getTableData(Relation relation, String[] conditions) {
+        return dbHandler.getRelationInfo(relation, conditions);
     }
 
 

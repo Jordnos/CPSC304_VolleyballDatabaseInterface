@@ -96,8 +96,11 @@ public class UpdatePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == updateButton) {
             delegate.updateCountry(keyText.get(0).getText(), Integer.parseInt(nonKeyText.get(0).getText()));
-            // next line: shows new list of countries in terminal for testing purposes
-            delegate.showCountry();
+
+            DataTable frame = new DataTable(delegate.getCountryTableData());
+            frame.setTitle("Country");
+            frame.setVisible(true);
+            frame.setBounds(10, 10, 370, 360);
         }
     }
 }

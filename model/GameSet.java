@@ -5,7 +5,10 @@ package ca.ubc.cs304.model;
 /**
  * The intent for this class is to update/store information about the GameSet relation
  */
-public class GameSet {
+public class GameSet extends Relation{
+    private final String relationName = "GameSet";
+    private final String[] keyNames = {"setNumber","gid"};
+    private final String[] attributeNames = {"winnerScore","loserScore"};
     private final int setNumber;
     private final int winnerScore;
     private final int loserScore;
@@ -19,6 +22,13 @@ public class GameSet {
         this.gid = gid;
     }
 
+    public GameSet() {
+        this.setNumber = 0;
+        this.winnerScore = 0;
+        this.loserScore = 0;
+        this.gid = 0;
+    }
+
     public int getSetNumber(){
         return setNumber;
     }
@@ -30,6 +40,20 @@ public class GameSet {
     }
     public int getGid() {
         return gid;
+    }
+    @Override
+    public String getRelationName() {
+        return relationName;
+    }
+
+    @Override
+    public String[] getKeyNames() {
+        return keyNames;
+    }
+
+    @Override
+    public String[] getNonKeyNames() {
+        return attributeNames;
     }
 
 

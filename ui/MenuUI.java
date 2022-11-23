@@ -43,13 +43,8 @@ public class MenuUI extends JFrame {
     private JComponent makeDeletePanel() {
         return new DeletePanel(delegate);
     }
-    private JComponent makeUpdatePanel() {
-        return new UpdatePanel(delegate);
-    }
-    private JComponent makeSelectionPanel() {
-        // TODO:
-        return new JPanel();
-    }
+    private JComponent makeUpdatePanel() { return new UpdatePanel(delegate); }
+    private JComponent makeSelectionPanel() { return new SelectionPanel(delegate); }
     private JComponent makeProjectionPanel() {
         // TODO:
         return new JPanel();

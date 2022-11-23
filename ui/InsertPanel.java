@@ -27,7 +27,7 @@ public class InsertPanel extends JPanel implements ActionListener {
     ArrayList<JTextField> attributeText = new ArrayList<>();
     JLabel titleLabel;
     JButton insertButton;
-    private VolleyballWindowDelegate delegate;
+    private final VolleyballWindowDelegate delegate;
 
     public InsertPanel(VolleyballWindowDelegate delegate) {
         this.delegate = delegate;
@@ -87,8 +87,11 @@ public class InsertPanel extends JPanel implements ActionListener {
         if (e.getSource() == insertButton) {
             Country c = new Country(attributeText.get(0).getText(), Integer.parseInt(attributeText.get(1).getText()));
             delegate.insertCountry(c);
-            // next line: shows new list of countries in terminal for testing purposes
-            delegate.showCountry();
+
+            DataTable frame = new DataTable(delegate.getCountryTableData());
+            frame.setTitle("Country");
+            frame.setVisible(true);
+            frame.setBounds(10, 10, 370, 360);
         }
     }
 }

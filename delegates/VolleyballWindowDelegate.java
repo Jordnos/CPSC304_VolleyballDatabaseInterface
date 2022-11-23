@@ -1,6 +1,7 @@
 package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.Relation;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -25,4 +26,6 @@ public interface VolleyballWindowDelegate {
     public void insertCountry(Country model);
     public void showCountry();
     public void updateCountry(String countryName, int population);
+    public Relation[] getCountryTableData();
+    public Object[][] getTableData(Relation relation, String[] conditions);
 }
