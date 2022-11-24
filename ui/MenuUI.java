@@ -53,10 +53,7 @@ public class MenuUI extends JFrame {
     private JComponent makeProjectionPanel() {
         return new ProjectionPanel(delegate);
     }
-    private JComponent makeJoinPanel() {
-        // TODO:
-        return new JPanel();
-    }
+    private JComponent makeJoinPanel() { return new JoinPanel(delegate);}
     private JComponent makeDivisionPanel() {
         return new DivisionPanel(delegate);
     }

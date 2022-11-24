@@ -35,4 +35,5 @@ public interface VolleyballWindowDelegate {
     public Ref[] getRefTableData();
     public int[][] getPopMax();
     public Object[][] getProjectionInfo(Relation relation, String[] attributes);
+    public Object[][] getJoinInfo(Relation firstRelation, Relation secondRelation,String[] attributes);
 }

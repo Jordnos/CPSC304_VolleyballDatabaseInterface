@@ -145,5 +145,9 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
         return dbHandler.getProjectionInfo(relation, attributes);
     }
 
+    public Object[][] getJoinInfo(Relation firstRelation, Relation secondRelation, String[] attributes) {
+        return dbHandler.getJoinInfo(firstRelation, secondRelation, attributes);
+    }
+
 
 }
