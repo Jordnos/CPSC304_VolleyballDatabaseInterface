@@ -1,6 +1,6 @@
 package ca.ubc.cs304.ui;
 
-import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+//import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
 import ca.ubc.cs304.model.Country;
 
