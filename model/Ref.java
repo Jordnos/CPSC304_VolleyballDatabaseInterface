@@ -36,6 +36,14 @@ public class Ref extends Relation{
         return salary;
     }
 
+
+    @Override
+    public Object[] getData() {
+        Object[] o = {rid, name, salary};
+        return o;
+    }
+
+
     @Override
     public String getRelationName() {
         return relationName;
