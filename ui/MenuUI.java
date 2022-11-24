@@ -2,6 +2,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuUI extends JFrame {
 
@@ -15,6 +16,10 @@ public class MenuUI extends JFrame {
         setSize(WIDTH, HEIGHT);
 
         addMenus();
+
+        Dimension d = this.getToolkit().getScreenSize();
+        Rectangle r = this.getBounds();
+        this.setLocation( (d.width - r.width)/2, (d.height - r.height)/2 );
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -46,8 +51,7 @@ public class MenuUI extends JFrame {
     private JComponent makeUpdatePanel() { return new UpdatePanel(delegate); }
     private JComponent makeSelectionPanel() { return new SelectionPanel(delegate); }
     private JComponent makeProjectionPanel() {
-        // TODO:
-        return new JPanel();
+        return new ProjectionPanel(delegate);
     }
     private JComponent makeJoinPanel() {
         // TODO:
@@ -57,7 +61,7 @@ public class MenuUI extends JFrame {
         return new DivisionPanel();
     }
     private JComponent makeAggregationGroupByPanel() {
-        return new AggregationGroupByPanel();
+        return new AggregationGroupByPanel(delegate);
     }
     private JComponent makeAggregationHavingPanel() {
         return new AggregationHavingPanel();

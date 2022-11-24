@@ -4,6 +4,8 @@ import ca.ubc.cs304.model.Country;
 import ca.ubc.cs304.model.Ref;
 import ca.ubc.cs304.model.Relation;
 
+import java.util.ArrayList;
+
 /**
  * This interface uses the delegation design pattern where instead of having
  * the VolleyballWindow class try to do everything, it will only
@@ -32,4 +34,5 @@ public interface VolleyballWindowDelegate {
     public Object[][] getTableData(Relation relation, String[] conditions);
     public Ref[] getRefTableData();
     public int[][] getPopMax();
+    public Object[][] getProjectionInfo(Relation relation, String[] attributes);
 }

@@ -4,7 +4,7 @@ import ca.ubc.cs304.model.Relation;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class DataTable extends JFrame {
 
@@ -25,6 +25,14 @@ public class DataTable extends JFrame {
         this.data[0] = relation;
         this.dataArray = data;
         init();
+    }
+
+
+    public DataTable(Object[][] data, Relation relation, Object[] attributes) {
+        this.data = new Relation[1];
+        this.data[0] = relation;
+        this.dataArray = data;
+        initProjectionDataTable(attributes);
     }
 
     private void setupDataArr() {
@@ -48,6 +56,19 @@ public class DataTable extends JFrame {
             columnNames = data[0].getAllAttributeNames();
 
             table = new JTable(dataArray, columnNames);
+            scrollPane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+
+            container.add(scrollPane);
+        }
+        table.setDefaultEditor(Object.class, null);
+    }
+
+    private void initProjectionDataTable(Object[] attributes) {
+        if(data.length != 0){
+            String[] stringArray = Arrays.copyOf(attributes, attributes.length, String[].class);
+
+            table = new JTable(dataArray, stringArray);
             scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
 
