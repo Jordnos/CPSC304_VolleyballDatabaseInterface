@@ -1,6 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.GameSet;
 import ca.ubc.cs304.model.Ref;
 import ca.ubc.cs304.model.Relation;
 
@@ -315,6 +316,46 @@ public class DatabaseConnectionHandler {
         }
         System.out.println(result);
         return result;
+    }
+
+    public Object[][] getAggregationHaving() {
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();
+        Object[][] dataArray = null;
+        Relation relation = new GameSet();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT GID " +
+                    "FROM GameSet " +
+                    "GROUP BY GID HAVING COUNT(*)=3");
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int rowNum = 0;
+            while(rs.next()) {
+                a.add(new ArrayList<>());
+                for(int i = 0; i < 1; i++){
+                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                }
+                rowNum++;
+            }
+            if(a.isEmpty())
+                dataArray = new Object[0][0];
+            else{
+                dataArray = new Object[a.size()][a.get(0).size()];
+                for(int i = 0; i < a.size(); i++){
+                    dataArray[i] = a.get(i).toArray();
+                }
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return dataArray;
     }
 
     public Object[][] getProjectionInfo(Relation relation, String[] attributes) {

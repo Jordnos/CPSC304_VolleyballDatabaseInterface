@@ -60,9 +60,7 @@ public class MenuUI extends JFrame {
     private JComponent makeAggregationGroupByPanel() {
         return new AggregationGroupByPanel(delegate);
     }
-    private JComponent makeAggregationHavingPanel() {
-        return new AggregationHavingPanel();
-    }
+    private JComponent makeAggregationHavingPanel() { return new AggregationHavingPanel(delegate); }
     private JComponent makeNestedAggregationPanel() {
         return new NestedAggregationPanel();
     }
