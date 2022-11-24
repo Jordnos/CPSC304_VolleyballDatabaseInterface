@@ -4,9 +4,9 @@ import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.VolleyballWindowDelegate;
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.Ref;
 import ca.ubc.cs304.model.Relation;
 import ca.ubc.cs304.ui.LoginWindow;
-import ca.ubc.cs304.ui.TerminalVolleyball;
 import ca.ubc.cs304.ui.VolleyballWindow;
 
 /**
@@ -130,6 +130,15 @@ public class Volleyball implements LoginWindowDelegate, VolleyballWindowDelegate
 
     public Object[][] getTableData(Relation relation, String[] conditions) {
         return dbHandler.getRelationInfo(relation, conditions);
+    }
+
+
+    public Ref[] getRefTableData() {
+        return dbHandler.getDivisionRef();
+    }
+
+    public int[][] getPopMax() {
+        return dbHandler.getAggregationGroup();
     }
 
 
