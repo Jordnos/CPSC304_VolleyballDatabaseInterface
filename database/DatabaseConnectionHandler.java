@@ -1,10 +1,12 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.Country;
+import ca.ubc.cs304.model.Ref;
 import ca.ubc.cs304.model.Relation;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * This class handles all events related to the volleyball database
@@ -162,40 +164,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public Country[] getCountryInfo() {
-        ArrayList<Country> result = new ArrayList<Country>();
 
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
-
-            // TERMINAL IMPLEMENTATION
-            // get info on ResultSet
-    		ResultSetMetaData rsmd = rs.getMetaData();
-
-    		System.out.println(" ");
-
-    		// display column names;
-    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
-    			// get column name and print it
-    			System.out.printf("%-20s", rsmd.getColumnName(i + 1));
-    		}
-            System.out.printf("\n");
-
-            while(rs.next()) {
-                Country model = new Country(rs.getString("Cname"),
-                        rs.getInt("Population"));
-                result.add(model);
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-        }
-
-        return result.toArray(new Country[result.size()]);
-    }
 
     public Object[][] getRelationInfo(Relation relation, String[] conditions) {
         ArrayList<ArrayList<Object>> a = new ArrayList<>();
@@ -242,5 +211,112 @@ public class DatabaseConnectionHandler {
 
         return dataArray;
     }
+
+    public Country[] getCountryInfo() {
+        ArrayList<Country> result = new ArrayList<Country>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
+
+            // TERMINAL IMPLEMENTATION
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            System.out.println(" ");
+
+            // display column names;
+            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                // get column name and print it
+                System.out.printf("%-20s", rsmd.getColumnName(i + 1));
+            }
+            System.out.printf("\n");
+
+            while(rs.next()) {
+                Country model = new Country(rs.getString("Cname"),
+                        rs.getInt("Population"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new Country[result.size()]);
+    }
+
+
+
+
+
+    public Ref[] getDivisionRef() {
+        ArrayList<Ref> result = new ArrayList<Ref>();
+
+        try {
+            Statement stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * from Ref R WHERE NOT EXISTS (SELECT L.lid FROM League L " +
+                    "WHERE NOT EXISTS (SELECT W.rid FROM WorksFor W " +
+                    "WHERE L.lid = W.lid AND W.rid = R.rid))");
+
+           // ResultSet rs = stmt.executeQuery("SELECT * from Ref");
+
+
+
+            while(rs.next()) {
+                Ref model = new Ref(rs.getInt("Rid"),
+                        rs.getString("Name"),
+                        rs.getInt("Salary"))
+                //Ref model = new Ref(6, "bob", 100)
+
+                {
+
+
+                };
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new Ref[result.size()]);
+    }
+
+    public int[][] getAggregationGroup() {
+        int[][] result = new int[5][2];
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT LID, AVG(Salary) as avgSalary FROM REF r, WorksFor w WHERE r.RID = w.RID GROUP BY LID");
+
+
+
+//            result[0] = rs.getInt("LID");
+//            result[1] = (rs.getInt("avgSalary"));
+
+            int i = 0;
+
+            while(rs.next()) {
+                result[i][0] = rs.getInt("LID");
+                result[i][1] = (rs.getInt("avgSalary"));
+                i +=1;
+
+            }
+
+
+
+
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        System.out.println(result);
+        return result;
+    }
+
+
 
 }
