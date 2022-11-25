@@ -90,9 +90,9 @@ public class JoinPanel extends JPanel implements ActionListener {
         comparatorComboBox.add(new JComboBox(comparatorsEnglish));
         secondAttributeComboBox.add(new JComboBox<>(secondRelation.getAllAttributeNames()));
 
-        firstAttributeComboBox.get(numConditions).setBounds(LABEL_X_POS, INITIAL_Y + (2*HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+1), LABEL_WIDTH, LABEL_HEIGHT);
-        comparatorComboBox.get(numConditions).setBounds(LABEL_X_POS+LABEL_WIDTH, INITIAL_Y + (2*HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+1), LABEL_WIDTH*2, LABEL_HEIGHT);
-        secondAttributeComboBox.get(numConditions).setBounds(LABEL_X_POS+3*LABEL_WIDTH, INITIAL_Y + (2*HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+1), LABEL_WIDTH, LABEL_HEIGHT);
+        firstAttributeComboBox.get(numConditions).setBounds(LABEL_X_POS, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+2), LABEL_WIDTH, LABEL_HEIGHT);
+        comparatorComboBox.get(numConditions).setBounds(LABEL_X_POS+LABEL_WIDTH, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+2), LABEL_WIDTH*2, LABEL_HEIGHT);
+        secondAttributeComboBox.get(numConditions).setBounds(LABEL_X_POS+3*LABEL_WIDTH, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+2), LABEL_WIDTH, LABEL_HEIGHT);
 
         add(firstAttributeComboBox.get(numConditions));
         add(comparatorComboBox.get(numConditions));
@@ -100,8 +100,8 @@ public class JoinPanel extends JPanel implements ActionListener {
 
         numConditions++;
 
-        joinButton.setBounds(LABEL_X_POS, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+1), LABEL_WIDTH, LABEL_HEIGHT);
-        addConditionButton.setBounds(LABEL_X_POS+LABEL_WIDTH, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+1), LABEL_WIDTH*2, LABEL_HEIGHT);
+        joinButton.setBounds(LABEL_X_POS, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+2), LABEL_WIDTH, LABEL_HEIGHT);
+        addConditionButton.setBounds(LABEL_X_POS+LABEL_WIDTH, INITIAL_Y + (HEIGHT_TO_NEXT + LABEL_HEIGHT)*(numConditions+2), LABEL_WIDTH*2, LABEL_HEIGHT);
 
         revalidate();
         repaint();

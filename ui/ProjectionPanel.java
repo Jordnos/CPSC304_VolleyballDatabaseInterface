@@ -97,8 +97,8 @@ public class ProjectionPanel extends JPanel implements ActionListener {
             ArrayList<String> attributes = new ArrayList<>();
 
             if (numAttributes == 0) {
-                DataTable frame = new DataTable(delegate.getCountryTableData()); //only projects on country
-                frame.setTitle("Country");
+                DataTable frame = new DataTable(delegate.getTableData(relation, new String[0]), relation);
+                frame.setTitle(relation.getRelationName());
                 frame.setVisible(true);
                 frame.setBounds(10, 10, 370, 360);
             } else {

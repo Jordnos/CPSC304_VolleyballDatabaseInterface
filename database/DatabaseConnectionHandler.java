@@ -409,7 +409,7 @@ public class DatabaseConnectionHandler {
 
         try {
             Statement stmt = connection.createStatement();
-            String query = "SELECT * FROM " + firstRelation.getRelationName() + " AS r1, " + secondRelation.getRelationName() + " AS r2";
+            String query = "SELECT * FROM " + firstRelation.getRelationName() + " r1, " + secondRelation.getRelationName() + " r2";
             for(int i = 0; i < conditions.length; i++){
                 if(i == 0)
                     query += " WHERE ";
@@ -426,8 +426,8 @@ public class DatabaseConnectionHandler {
             int rowNum = 0;
             while(rs.next()) {
                 a.add(new ArrayList<>());
-                for(int i = 0; i < firstRelation.getAllAttributeNames().length + secondRelation.getAllAttributeNames().length; i++){
-                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                for(int i = 0; i < rsmd.getColumnCount(); i++){
+                    a.get(rowNum).add(rs.getObject(i+1));
                 }
                 rowNum++;
             }
