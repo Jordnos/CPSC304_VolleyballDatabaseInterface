@@ -48,7 +48,7 @@ public class AggregationHavingPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == runButton) {
             DataTable frame = new DataTable(delegate.getAggregationHaving(), new GameSet(), new String[]{"GID"});
-            frame.setTitle("GIDS of games with more than 3 sets");
+            frame.setTitle("GIDS of games with 3 sets");
             frame.setVisible(true);
             frame.setBounds(10, 10, 370, 360);
         }

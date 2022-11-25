@@ -2,12 +2,10 @@ package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.Country;
 import ca.ubc.cs304.model.GameSet;
-import ca.ubc.cs304.model.Ref;
 import ca.ubc.cs304.model.Relation;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * This class handles all events related to the volleyball database
@@ -220,18 +218,8 @@ public class DatabaseConnectionHandler {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
 
-            // TERMINAL IMPLEMENTATION
             // get info on ResultSet
             ResultSetMetaData rsmd = rs.getMetaData();
-
-            System.out.println(" ");
-
-            // display column names;
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                // get column name and print it
-                System.out.printf("%-20s", rsmd.getColumnName(i + 1));
-            }
-            System.out.printf("\n");
 
             while(rs.next()) {
                 Country model = new Country(rs.getString("Cname"),
@@ -248,10 +236,6 @@ public class DatabaseConnectionHandler {
         return result.toArray(new Country[result.size()]);
     }
 
-
-
-
-
     public Object[][]  getDivisionRef() {
         ArrayList<ArrayList<Object>> a = new ArrayList<>();
         Object[][] dataArray = null;
@@ -265,7 +249,6 @@ public class DatabaseConnectionHandler {
                     "WHERE L.lid = W.lid AND W.rid = R.rid))");
 
             // ResultSet rs = stmt.executeQuery("SELECT * from Ref");
-
 
             ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -375,13 +358,12 @@ public class DatabaseConnectionHandler {
     public Object[][] getAggregationNested() {
         ArrayList<ArrayList<Object>> a = new ArrayList<>();
         Object[][] dataArray = null;
-        Relation relation = new GameSet();
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT C.Cname, Population " +
-                    "FROM Country C WHERE EXISTS (SELECT * FROM LEAGUE L " +
-                    "WHERE C.Population > 60000000)");
+            ResultSet rs = stmt.executeQuery("SELECT R.RID, R.Name " +
+                    "FROM Ref R WHERE 1 < (SELECT COUNT(*) FROM WorksFor W " +
+                    "WHERE W.RID = R.RID GROUP BY W.RID)");
 
             // get info on ResultSet
             ResultSetMetaData rsmd = rs.getMetaData();

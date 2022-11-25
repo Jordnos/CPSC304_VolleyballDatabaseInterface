@@ -8,23 +8,26 @@ package ca.ubc.cs304.model;
 public class Team extends Relation{
     private final String relationName = "Team";
     private final String[] keyNames = {"tid"};
-    private final String[] attributeNames = {"name","lid","cid"};
+    private final String[] attributeNames = {"TeamName","record","lid","cid"};
     private final int tid;
-    private final String name;
+    private final String teamName;
+    private final int record;
     private final int lid;
     private final int cid;
 
 
-    public Team(int tid, String name, int lid, int cid) {
+    public Team(int tid, String teamName, int record, int lid, int cid) {
         this.tid = tid;
-        this.name = name;
+        this.teamName = teamName;
+        this.record = record;
         this.lid = lid;
         this.cid = cid;
     }
 
     public Team() {
         this.tid = 0;
-        this.name = null;
+        this.teamName = null;
+        this.record = 0;
         this.lid = 0;
         this.cid = 0;
     }
@@ -33,7 +36,10 @@ public class Team extends Relation{
         return tid;
     }
     public String getName() {
-        return name;
+        return teamName;
+    }
+    public int getRecord() {
+        return record;
     }
     public int getLid() {
         return lid;
