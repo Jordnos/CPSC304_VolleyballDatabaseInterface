@@ -32,8 +32,11 @@ public class DataTable extends JFrame {
         this.data = new Relation[1];
         this.data[0] = relation;
         this.dataArray = data;
+
         initProjectionDataTable(attributes);
     }
+
+
 
     private void setupDataArr() {
         ArrayList<ArrayList<Object>> a = new ArrayList<>();

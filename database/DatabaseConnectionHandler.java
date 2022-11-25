@@ -252,31 +252,38 @@ public class DatabaseConnectionHandler {
 
 
 
-    public Ref[] getDivisionRef() {
-        ArrayList<Ref> result = new ArrayList<Ref>();
+    public Object[][]  getDivisionRef() {
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();
+        Object[][] dataArray = null;
+        Relation relation = new GameSet();
 
         try {
             Statement stmt = connection.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * from Ref R WHERE NOT EXISTS (SELECT L.lid FROM League L " +
+            ResultSet rs = stmt.executeQuery("SELECT RID, Name from Ref R WHERE NOT EXISTS (SELECT L.lid FROM League L " +
                     "WHERE NOT EXISTS (SELECT W.rid FROM WorksFor W " +
                     "WHERE L.lid = W.lid AND W.rid = R.rid))");
 
-           // ResultSet rs = stmt.executeQuery("SELECT * from Ref");
+            // ResultSet rs = stmt.executeQuery("SELECT * from Ref");
 
 
+            ResultSetMetaData rsmd = rs.getMetaData();
 
+            int rowNum = 0;
             while(rs.next()) {
-                Ref model = new Ref(rs.getInt("Rid"),
-                        rs.getString("Name"),
-                        rs.getInt("Salary"))
-                //Ref model = new Ref(6, "bob", 100)
-
-                {
-
-
-                };
-                result.add(model);
+                a.add(new ArrayList<>());
+                for(int i = 0; i < 2; i++){
+                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                }
+                rowNum++;
+            }
+            if(a.isEmpty()) {
+                dataArray = new Object[0][0];
+            } else{
+                dataArray = new Object[a.size()][a.get(0).size()];
+                for(int i = 0; i < a.size(); i++){
+                    dataArray[i] = a.get(i).toArray();
+                }
             }
 
             rs.close();
@@ -285,37 +292,44 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
 
-        return result.toArray(new Ref[result.size()]);
+        return dataArray;
     }
 
-    public int[][] getAggregationGroup() {
-        int[][] result = new int[5][2];
+    public Object[][] getAggregationGroup() {
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();
+        Object[][] dataArray = null;
+
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT LID, AVG(Salary) as avgSalary FROM REF r, WorksFor w WHERE r.RID = w.RID GROUP BY LID");
+            ResultSet rs = stmt.executeQuery("SELECT LID ,AVG(Salary) as avgSalary FROM REF r, WorksFor w WHERE r.RID = w.RID GROUP BY LID");
 
 
+            ResultSetMetaData rsmd = rs.getMetaData();
 
-//            result[0] = rs.getInt("LID");
-//            result[1] = (rs.getInt("avgSalary"));
-
-            int i = 0;
-
+            int rowNum = 0;
             while(rs.next()) {
-                result[i][0] = rs.getInt("LID");
-                result[i][1] = (rs.getInt("avgSalary"));
-                i +=1;
-
+                a.add(new ArrayList<>());
+                for(int i = 0; i < 2; i++){
+                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                }
+                rowNum++;
+            }
+            if(a.isEmpty()) {
+                dataArray = new Object[0][0];
+            } else{
+                dataArray = new Object[a.size()][a.get(0).size()];
+                for(int i = 0; i < a.size(); i++){
+                    dataArray[i] = a.get(i).toArray();
+                }
             }
 
-
-
-
+            rs.close();
+            stmt.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        System.out.println(result);
-        return result;
+
+        return dataArray;
     }
 
     public Object[][] getAggregationHaving() {
@@ -343,6 +357,46 @@ public class DatabaseConnectionHandler {
             if(a.isEmpty())
                 dataArray = new Object[0][0];
             else{
+                dataArray = new Object[a.size()][a.get(0).size()];
+                for(int i = 0; i < a.size(); i++){
+                    dataArray[i] = a.get(i).toArray();
+                }
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return dataArray;
+    }
+
+    public Object[][] getAggregationNested() {
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();
+        Object[][] dataArray = null;
+        Relation relation = new GameSet();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT C.Cname, Population " +
+                    "FROM Country C WHERE EXISTS (SELECT * FROM LEAGUE L " +
+                    "WHERE C.Population > 60000000)");
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int rowNum = 0;
+            while(rs.next()) {
+                a.add(new ArrayList<>());
+                for(int i = 0; i < 2; i++){
+                    a.get(rowNum).add(rs.getObject(rsmd.getColumnName(i+1)));
+                }
+                rowNum++;
+            }
+            if(a.isEmpty()) {
+                dataArray = new Object[0][0];
+            } else{
                 dataArray = new Object[a.size()][a.get(0).size()];
                 for(int i = 0; i < a.size(); i++){
                     dataArray[i] = a.get(i).toArray();
